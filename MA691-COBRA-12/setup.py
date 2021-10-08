@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='cobra-12',
+    name='MA691-COBRA-12',
     version='0.0.3',
     author='Mike Huls',
     author_email='mike_huls@hotmail.com',
@@ -16,6 +16,6 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/mike-huls/toolbox/issues"
     },
     license='MIT',
-    packages=['cobra-12'],
+    packages=['MA691-COBRA-12'],
     install_requires=['requests'],
 )
