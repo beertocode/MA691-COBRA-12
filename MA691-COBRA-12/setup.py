@@ -6,16 +6,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setuptools.setup(
     name='MA691-COBRA-12',
     version='0.0.3',
-    author='Mike Huls',
-    author_email='mike_huls@hotmail.com',
-    description='Testing installation of Package',
+    
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/mike-huls/toolbox',
+    url='https://github.com/beertocode/MA691-COBRA-12',
     project_urls = {
-        "Bug Tracker": "https://github.com/mike-huls/toolbox/issues"
+        "Bug Tracker": "https://github.com/beertocode/MA691-COBRA-12/issues"
     },
-    license='MIT',
     packages=['MA691-COBRA-12'],
     install_requires=['requests'],
 )
