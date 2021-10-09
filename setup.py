@@ -8,7 +8,7 @@ setup(
   author = 'Sristy',                   # Type in your name
   author_email = 'sristy.sharma98@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/beertocode/MA691_COBRA_12',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/beertocode/MA691_COBRA_12/archive/refs/tags/0.1.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/beertocode/MA691_COBRA_12/archive/refs/tags/0.1.tar.gz',   
   keywords = ['Cobra', 'Ridge', 'Lasso','KNN','Kernel Cobra','MLR'],   # Keywords that define your package best
   install_requires=[           
           'numpy',
