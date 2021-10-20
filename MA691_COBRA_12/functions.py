@@ -52,7 +52,7 @@ def lasso(X_b,y_b):
     import seaborn as sns
     sns.distplot(y_test-prediction_lasso)
     X=[]
-    for i in range(1,len(X_test)):
+    for i in range(1,max(X_test)+2):
         X.append(i)
     X=np.array(X)
     plt.scatter(prediction_lasso,y_test)
@@ -90,7 +90,7 @@ def ridge(X_b,y_b):
     sns.distplot(y_test-prediction_ridge)
 
     X=[]
-    for i in range(1,len(X_test)):
+    for i in range(1,max(X_test)+2):
         X.append(i)
     X=np.array(X)
     plt.scatter(prediction_ridge,y_test)
@@ -150,7 +150,7 @@ def knn(X_b,y_b):
     plt.close(fig)
 
     X=[]
-    for i in range(1,len(X_test)):
+    for i in range(1,max(X_test)+2):
         X.append(i)
     X=np.array(X)
     plt.scatter(Y_pred,Y_test)
@@ -190,7 +190,7 @@ def mlr(X,Y):
     print("RMSE: ",test_set_rmse)
     print("r2 score: ",test_set_r2)
     X=[]
-    for i in range(1,107):
+    for i in range(1,max(X_test)+2):
         X.append(i)
     X=np.array(X)
     plt.scatter(pred,y_test)
@@ -241,7 +241,86 @@ def kernel_cobra(boston):
     import numpy as np
 
     X=[]
-    for i in range(1,107):
+    for i in range(1,max(X_test)+2):
+        X.append(i)
+    X=np.array(X)
+
+
+    from sklearn.metrics import r2_score
+    from sklearn.model_selection import cross_val_score, GridSearchCV
+    prediction_kernel=kernel.predict(boston_X_test)
+
+    print("kernel cobra Model")
+    model_mlr = pd.DataFrame(boston_X_test)
+    model_mlr['MEDV'] = boston_y_test
+    model_mlr['Predicted MEDV'] = prediction_kernel
+    print(model_mlr.head(10))
+    print("\n\n")
+
+    # Prediction
+    y_pred_train_kernel1 = kernel.predict(boston_X_train)
+    y_pred_test_kernel1 = kernel.predict(boston_X_test)
+    print('Training accuracy : {}\n'.format(r2_score(boston_y_train, y_pred_train_kernel1).round(5)))
+    print('Testing accuracy : {}'.format(r2_score(boston_y_test, y_pred_test_kernel1).round(5)))
+
+    mse1 = cross_val_score(kernel, boston.data, boston.target, scoring = 'neg_mean_squared_error',cv=5)
+    mean_mse1 = np.mean(mse1)
+    print("\nmean square error: ",-(mean_mse1).round(5))
+    print("\n")
+
+    plt.scatter(y_pred,boston_y_test)
+    plt.xlabel("predicted")
+    plt.ylabel("y_test")
+    plt.plot(X,X,color="red")
+
+    
+
+def kernel_cobra_diabetes(X,y):
+    from sklearn import datasets
+    from sklearn.metrics import accuracy_score
+    from kernelcobra import KernelCobra
+    #from sklearn.datasets.samples_generator import make_regression
+    #boston = datasets.load_boston()
+
+    # boston_X_train = boston.data[:-40]
+    # boston_X_test = boston.data[-40:]
+
+    # boston_y_train = boston.target[:-40]
+    # boston_y_test = boston.target[-40:]
+
+    nn=len(X)
+    nn1=nn/3
+    lim=nn=nn1
+    boston_X_train = X[:lim]
+    boston_X_test = X[lim:]
+
+    boston_y_train = y[:lim]
+    boston_y_test = y[lim:]
+
+    from pycobra.cobra import Cobra
+    from pycobra.kernelcobra import KernelCobra
+
+    from pycobra.ewa import Ewa
+    from pycobra.diagnostics import Diagnostics
+    from pycobra.visualisation import Visualisation
+    import numpy as np
+
+    
+
+    boston_kernelcobra = KernelCobra()
+    boston_kernelcobra.fit(boston_X_train, boston_y_train)
+
+    kernel = KernelCobra()
+
+    kernel.fit(boston_X_train, boston_y_train)
+    kernel.predict(boston_X_test)
+
+    y_pred=kernel.predict(boston_X_test)
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    X=[]
+    for i in range(1,max(boston_X_test)+2):
         X.append(i)
     X=np.array(X)
 
