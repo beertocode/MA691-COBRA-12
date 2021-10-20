@@ -52,7 +52,8 @@ def lasso(X_b,y_b):
     import seaborn as sns
     sns.distplot(y_test-prediction_lasso)
     X=[]
-    for i in range(1,max(X_test)+2):
+    rng=max(X_test)+50
+    for i in range(1,rng):
         X.append(i)
     X=np.array(X)
     plt.scatter(prediction_lasso,y_test)
@@ -90,7 +91,8 @@ def ridge(X_b,y_b):
     sns.distplot(y_test-prediction_ridge)
 
     X=[]
-    for i in range(1,max(X_test)+2):
+    rng=max(X_test)+50
+    for i in range(1,rng):
         X.append(i)
     X=np.array(X)
     plt.scatter(prediction_ridge,y_test)
@@ -150,7 +152,8 @@ def knn(X_b,y_b):
     plt.close(fig)
 
     X=[]
-    for i in range(1,max(X_test)+2):
+    rng=max(X_test)+50
+    for i in range(1,rng):
         X.append(i)
     X=np.array(X)
     plt.scatter(Y_pred,Y_test)
@@ -190,7 +193,8 @@ def mlr(X,Y):
     print("RMSE: ",test_set_rmse)
     print("r2 score: ",test_set_r2)
     X=[]
-    for i in range(1,max(X_test)+2):
+    rng=max(X_test)+50
+    for i in range(1,rng):
         X.append(i)
     X=np.array(X)
     plt.scatter(pred,y_test)
@@ -241,7 +245,8 @@ def kernel_cobra(boston):
     import numpy as np
 
     X=[]
-    for i in range(1,max(X_test)+2):
+    rng=max(X_test)+50
+    for i in range(1,rng):
         X.append(i)
     X=np.array(X)
 
@@ -320,7 +325,8 @@ def kernel_cobra_diabetes(X,y):
     import numpy as np
 
     X=[]
-    for i in range(1,max(boston_X_test)+2):
+    rng=max(X_test)+50
+    for i in range(1,rng):
         X.append(i)
     X=np.array(X)
 
