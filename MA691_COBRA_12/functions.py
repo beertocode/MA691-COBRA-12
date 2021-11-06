@@ -215,12 +215,12 @@ def kernel_cobra(boston):
     # boston_y_train = boston.target[:-40]
     # boston_y_test = boston.target[-40:]
 
+    #boston_X_train, boston_X_test, boston_y_train, boston_y_test = train_test_split(X, Y, test_size = 0.2, random_state=9)
+    boston_X_train = boston.data[:300]
+    boston_X_test = boston.data[300:]
 
-    boston_X_train = boston.data[:400]
-    boston_X_test = boston.data[400:]
-
-    boston_y_train = boston.target[:400]
-    boston_y_test = boston.target[400:]
+    boston_y_train = boston.target[:300]
+    boston_y_test = boston.target[300:]
 
     from pycobra.cobra import Cobra
     from pycobra.kernelcobra import KernelCobra
