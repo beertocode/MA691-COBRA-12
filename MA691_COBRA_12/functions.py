@@ -8,6 +8,12 @@ from sklearn.linear_model import Ridge, Lasso
 from sklearn.metrics import r2_score
 from sklearn.model_selection import cross_val_score, GridSearchCV
 import warnings
+from sklearn.model_selection import cross_val_score
+from numpy import mean
+from numpy import std
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_predict
 
 warnings.filterwarnings('ignore', category = DeprecationWarning)
 from warnings import filterwarnings
@@ -43,11 +49,20 @@ def lasso(X_b,y_b):
     y_pred_test_lasso1 = lasso_regressor.predict(X_test)
     print('Training accuracy : {}\n'.format(r2_score(y_train, y_pred_train_lasso1).round(5)))
     print('Testing accuracy : {}'.format(r2_score(y_test, y_pred_test_lasso1).round(5)))
-
-    mse1 = cross_val_score(lasso_regressor, X_b, y_b, scoring = 'neg_mean_squared_error',cv=5)
-    mean_mse1 = np.mean(mse1)
-    print("\nmean square error: ",-(mean_mse1).round(5))
-    print("\n")
+    
+    
+    #cross validation
+    for i in range(2,30,4):
+        cv = KFold(n_splits=i, random_state=1, shuffle=True)
+        train_score = cross_val_score(lasso_regressor, X_train, y_train,scoring='r2', cv=cv).mean()
+        test_score = cross_val_score(lasso_regressor, X_test, y_test,scoring='r2', cv=cv).mean()
+        print ("training accuracy using cross validation for ",i," splits:",train_score)
+        print ("testing accuracy using cross validation for ",i," splits:",test_score)
+    
+#     mse1 = cross_val_score(lasso_regressor, X_b, y_b, scoring = 'neg_mean_squared_error',cv=5)
+#     mean_mse1 = np.mean(mse1)
+#     print("\nmean square error: ",-(mean_mse1).round(5))
+#     print("\n")
 
     import seaborn as sns
     sns.distplot(y_test-prediction_lasso)
@@ -82,10 +97,21 @@ def ridge(X_b,y_b):
     print('Training accuracy : {}\n'.format(r2_score(y_train, y_pred_train_ridge1).round(5)))
     print('Testing accuracy : {}'.format(r2_score(y_test, y_pred_test_ridge1).round(5)))
 
-    mse1 = cross_val_score(ridge_regressor, X_b, y_b, scoring = 'neg_mean_squared_error',cv=5)
-    mean_mse1 = np.mean(mse1)
-    print("\nmean square error: ",-(mean_mse1).round(5))
-    print("\n")
+    
+    
+    #cross validation
+    for i in range(2,30,4):
+        cv = KFold(n_splits=i, random_state=1, shuffle=True)
+        train_score = cross_val_score(ridge, X_train, y_train,scoring='r2', cv=cv).mean()
+        test_score = cross_val_score(ridge, X_test, y_test,scoring='r2', cv=cv).mean()
+        print ("training accuracy using cross validation for ",i," splits:",train_score)
+        print ("testing accuracy using cross validation for ",i," splits:",test_score)
+    
+    
+#     mse1 = cross_val_score(ridge_regressor, X_b, y_b, scoring = 'neg_mean_squared_error',cv=5)
+#     mean_mse1 = np.mean(mse1)
+#     print("\nmean square error: ",-(mean_mse1).round(5))
+#     print("\n")
 
     import seaborn as sns
     sns.distplot(y_test-prediction_ridge)
@@ -115,10 +141,20 @@ def knn(X_b,y_b):
     print('Training accuracy : {}\n'.format(r2_score(Y_train, y_pred_train_knn1).round(5)))
     print('Testing accuracy : {}\n'.format(r2_score(Y_test, y_pred_test_knn1).round(5)))
 
-    mse1 = cross_val_score(knr, X_b, y_b, scoring = 'neg_mean_squared_error',cv=5)
-    mean_mse1 = np.mean(mse1)
-    print("\nmean square error(cross validation score): ",-(mean_mse1).round(5))
-    print("\n")
+        #cross validation
+    for i in range(2,30,4):
+        cv = KFold(n_splits=i, random_state=1, shuffle=True)
+        train_score = cross_val_score(knr, X_train, Y_train,scoring='r2', cv=cv).mean()
+        test_score = cross_val_score(knr, X_test, Y_test,scoring='r2', cv=cv).mean()
+        print ("training accuracy using cross validation for ",i," splits:",train_score)
+        print ("testing accuracy using cross validation for ",i," splits:",test_score)
+    
+    
+    
+#     mse1 = cross_val_score(knr, X_b, y_b, scoring = 'neg_mean_squared_error',cv=5)
+#     mean_mse1 = np.mean(mse1)
+#     print("\nmean square error(cross validation score): ",-(mean_mse1).round(5))
+#     print("\n")
 
     # Create Dataset with Testing values and Predicted Prices
     print("KNN Regresson Model")
@@ -187,6 +223,16 @@ def mlr(X,Y):
     print('Training accuracy : {}\n'.format(r2_score(y_train, y_pred_train_mlr1).round(5)))
     print('Testing accuracy : {}'.format(r2_score(y_test, y_pred_test_mlr1).round(5)))
     print("\n")
+    
+        #cross validation
+    for i in range(2,30,4):
+        cv = KFold(n_splits=i, random_state=1, shuffle=True)
+        train_score = cross_val_score(lin_reg_mod, X_train, y_train,scoring='r2', cv=cv).mean()
+        test_score = cross_val_score(lin_reg_mod, X_test, y_test,scoring='r2', cv=cv).mean()
+        print ("training accuracy using cross validation for ",i," splits:",train_score)
+        print ("testing accuracy using cross validation for ",i," splits:",test_score)
+    
+    
     test_set_rmse = (np.sqrt(mean_squared_error(y_test, pred)))
     test_set_r2 = r2_score(y_test, pred)
 
@@ -268,10 +314,20 @@ def kernel_cobra(boston):
     print('Training accuracy : {}\n'.format(r2_score(boston_y_train, y_pred_train_kernel1).round(5)))
     print('Testing accuracy : {}'.format(r2_score(boston_y_test, y_pred_test_kernel1).round(5)))
 
-    mse1 = cross_val_score(kernel, boston.data, boston.target, scoring = 'neg_mean_squared_error',cv=5)
-    mean_mse1 = np.mean(mse1)
-    print("\nmean square error: ",-(mean_mse1).round(5))
-    print("\n")
+    
+    #cross validation
+    for i in range(2,30,4):
+        cv = KFold(n_splits=i, random_state=1, shuffle=True)
+        train_score = cross_val_score(kernel, boston_X_train, boston_y_train,scoring='r2', cv=cv).mean()
+        test_score = cross_val_score(kernel, boston_X_test, boston_y_test,scoring='r2', cv=cv).mean()
+        print ("training accuracy using cross validation for ",i," splits:",train_score)
+        print ("testing accuracy using cross validation for ",i," splits:",test_score)
+    
+    
+#     mse1 = cross_val_score(kernel, boston.data, boston.target, scoring = 'neg_mean_squared_error',cv=5)
+#     mean_mse1 = np.mean(mse1)
+#     print("\nmean square error: ",-(mean_mse1).round(5))
+#     print("\n")
 
     plt.scatter(y_pred,boston_y_test)
     plt.xlabel("predicted")
@@ -295,7 +351,7 @@ def kernel_cobra_diabetes(X,y):
 
     nn=len(X)
     nn1=nn/3
-    lim=nn=nn1
+    lim=int(nn-nn1)
     boston_X_train = X[:lim]
     boston_X_test = X[lim:]
 
@@ -347,11 +403,25 @@ def kernel_cobra_diabetes(X,y):
     y_pred_test_kernel1 = kernel.predict(boston_X_test)
     print('Training accuracy : {}\n'.format(r2_score(boston_y_train, y_pred_train_kernel1).round(5)))
     print('Testing accuracy : {}'.format(r2_score(boston_y_test, y_pred_test_kernel1).round(5)))
+    
+    
+    
+    for i in range(2,30,4):
+        cv = KFold(n_splits=i, random_state=1, shuffle=True)
+        train_score = cross_val_score(kernel, boston_X_train, boston_y_train,scoring='r2', cv=cv).mean()
+        test_score = cross_val_score(kernel, boston_X_test, boston_y_test,scoring='r2', cv=cv).mean()
+        print ("training accuracy using cross validation for ",i," splits:",train_score)
+        print ("testing accuracy using cross validation for ",i," splits:",test_score)
+    
+    
+    
+    
+    
 
-    mse1 = cross_val_score(kernel, boston.data, boston.target, scoring = 'neg_mean_squared_error',cv=5)
-    mean_mse1 = np.mean(mse1)
-    print("\nmean square error: ",-(mean_mse1).round(5))
-    print("\n")
+#     mse1 = cross_val_score(kernel, boston.data, boston.target, scoring = 'neg_mean_squared_error',cv=5)
+#     mean_mse1 = np.mean(mse1)
+#     print("\nmean square error: ",-(mean_mse1).round(5))
+#     print("\n")
 
     plt.scatter(y_pred,boston_y_test)
     plt.xlabel("predicted")
